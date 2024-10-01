@@ -11,7 +11,7 @@ class BaseMaterials:
         self.calculate_square(width, height)
 
     def __str__(self) -> str:
-        return f'Значения базового класса: цена: {self.count}, количество: {self.result_cost}'
+        return f'Значения базового класса: цена: {self.result_cost}, количество: {self.count}'
 
     @property
     def get_count(self) -> int:

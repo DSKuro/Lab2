@@ -6,7 +6,7 @@ class Laminate(BaseMaterials):
         super().__init__(width, height, cost_per_unit)
 
     def __str__(self) -> str:
-        return f'Значения класса Laminate: цена: {self.count}, количество: {self.result_cost}'
+        return f'Значения класса Laminate: цена: {self.result_cost}, количество: {self.count}'
 
     def calculate_square(self, width: float, height : float) -> None:
         self.square = width * height

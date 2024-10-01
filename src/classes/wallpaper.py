@@ -7,7 +7,7 @@ class Wallpaper(BaseMaterials):
         self.color = color
 
     def __str__(self) -> str:
-        return f'Значения класса Wallpaper: цена: {self.count}, количество: {self.result_cost}, цвет {self.color}'
+        return f'Значения класса Wallpaper: цена: {self.result_cost}, количество: {self.count}, цвет {self.color}'
 
     def calculate_square(self, width: float, height : float) -> None:
         self.square = width * height

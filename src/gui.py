@@ -4,6 +4,8 @@ from PyQt6.QtWidgets import (QApplication, QMainWindow, QDialog, QPushButton, QL
 from classes.wallpaper import Wallpaper
 from classes.laminate import Laminate
 from classes.bar import Bar
+from docx import Document
+from openpyxl import Workbook
 
 class AlertBox(QDialog):
     def __init__(self):
@@ -42,6 +44,7 @@ class MainWindow(QMainWindow):
         layout2 = QVBoxLayout()
         horizontal_layout = QHBoxLayout()
         horizontal_layout2 = QHBoxLayout()
+        buttons_layout = QHBoxLayout()
         layout.setSpacing(30)
         layout2.setSpacing(30)
 
@@ -70,11 +73,23 @@ class MainWindow(QMainWindow):
         self.result_label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         layout.addWidget(self.result_label, alignment=Qt.AlignmentFlag.AlignHCenter)
 
+
         button = QPushButton("Запуск")
         button.setFixedSize(100, 40)
         button.clicked.connect(self.button_click)
-        layout.addWidget(button, alignment=Qt.AlignmentFlag.AlignHCenter)
-        layout.addStretch(1)
+        buttons_layout.addWidget(button)
+
+        button_to_doc = QPushButton("docx")
+        button_to_doc.setFixedSize(100, 40)
+        button_to_doc.clicked.connect(self.to_docx)
+        buttons_layout.addWidget(button_to_doc)
+
+        button_to_xls = QPushButton("xlsx")
+        button_to_xls.setFixedSize(100, 40)
+        button_to_xls.clicked.connect(self.to_xls)
+        buttons_layout.addWidget(button_to_xls)
+
+        layout.addLayout(buttons_layout)
 
         return layout
 
@@ -133,6 +148,25 @@ class MainWindow(QMainWindow):
                 obj = Bar(width, height, cost_per_unit)
         obj.calculate_cost(square)
         self.result_label.setText(str(obj))
+
+    def to_docx(self) -> None:
+        if self.result_label.text() == "":
+            return;
+        document = Document()
+        document.add_heading('Количество и стоимость', 0)
+        document.add_paragraph(self.result_label.text())
+        document.save("word.docx")
+
+    def to_xls(self) -> None:
+        if self.result_label.text() == "":
+            return
+
+        wb = Workbook()
+        ws = wb.active
+        ws['A1'] = 'Количество и стоимость'
+        ws['A2'] = self.result_label.text()
+        wb.save("excel.xlsx")
+
 
 
 app = QApplication([])
