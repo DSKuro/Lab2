@@ -1,8 +1,8 @@
 import math
-from base import BaseMaterials
+from base_materials import BaseMaterials
 
 class Laminate(BaseMaterials):
-    def __init__(self, width : float, height : float, cost_per_unit : float, color : tuple) -> None:
+    def __init__(self, width : float, height : float, cost_per_unit : float) -> None:
         super().__init__(width, height, cost_per_unit)
 
     def __str__(self) -> str:
@@ -13,7 +13,7 @@ class Laminate(BaseMaterials):
 
     def calculate_cost(self, s : float):
         self.calculate_count(s)
-        self.result_cost = self.get_count * self.get_cost
+        self.result_cost = self.get_count * self.cost_per_unit
 
     def calculate_count(self, s : float):
         self.count = math.ceil(s / self.get_square)
