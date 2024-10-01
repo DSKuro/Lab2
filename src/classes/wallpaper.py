@@ -1,5 +1,5 @@
 import math
-from base import BaseMaterials
+from base_materials import BaseMaterials
 
 class Wallpaper(BaseMaterials):
     def __init__(self, width : float, height : float, cost_per_unit : float, color : tuple) -> None:
@@ -14,7 +14,7 @@ class Wallpaper(BaseMaterials):
 
     def calculate_cost(self, s : float):
         self.calculate_count(s)
-        self.result_cost = self.get_count * self.get_cost
+        self.result_cost = self.get_count * self.cost_per_unit
 
     def calculate_count(self, s : float):
         self.count = math.ceil(s / self.get_square)
