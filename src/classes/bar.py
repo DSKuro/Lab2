@@ -8,6 +8,9 @@ class Bar(BaseMaterials):
     def __str__(self) -> str:
         return f'Значения класса Bar: цена: {self.result_cost}, количество: {self.count}'
 
+    def get_name(self) -> str:
+        return f'Плитка'
+
     def calculate_square(self, width: float, height : float) -> None:
         self.square = width * height
 

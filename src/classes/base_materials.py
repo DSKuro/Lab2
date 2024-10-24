@@ -26,6 +26,10 @@ class BaseMaterials:
         return self.result_cost
 
     @abstractmethod
+    def get_name(self) -> str:
+        pass
+
+    @abstractmethod
     def calculate_square(self, width: float, height : float) -> None:
         pass
 

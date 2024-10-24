@@ -9,6 +9,8 @@ def test_wallpaper():
     assert isinstance(wp, Wallpaper) == True
     assert wp.get_count == 5
     assert wp.get_cost == 25
+    wp = Wallpaper(-10.0, 10.0, 5, (255, 0, 255))
+    assert wp.square < 0.0
 
 def test_laminate():
     lm = Laminate(5.0, 5.0, 3.0)
@@ -16,6 +18,8 @@ def test_laminate():
     assert isinstance(lm, Laminate)
     assert lm.get_count == 16
     assert lm.get_cost == 48.0
+    lm = Laminate(5.0, 5.0, -3.0)
+    assert lm.get_count == 0.0
 
 def test_bar():
     bar = Bar(1, 1, 2)
@@ -23,3 +27,5 @@ def test_bar():
     assert isinstance(bar, Bar)
     assert bar.get_count == 50
     assert bar.get_cost == 100.0
+    bar = Bar(-1, 1, 2)
+    assert bar.get_cost == 0

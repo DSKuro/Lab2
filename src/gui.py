@@ -10,7 +10,6 @@ from openpyxl import Workbook
 class AlertBox(QDialog):
     def __init__(self):
         super().__init__()
-
         self.setWindowTitle("Ошибка!")
 
         q_btn = QDialogButtonBox.StandardButton.Ok
@@ -31,6 +30,7 @@ class MainWindow(QMainWindow):
         self.cost_textbox = None
         self.height_textbox = None
         self.width_textbox = None
+        self.obj = None
         self.combobox = None
         self.setWindowTitle("MyApp")
         self.setFixedSize(QSize(800, 400))
@@ -138,16 +138,16 @@ class MainWindow(QMainWindow):
             return
 
         index = self.combobox.currentText()
-        obj = None
+        self.obj = None
         match index:
             case "Обои":
-                obj = Wallpaper(width, height, cost_per_unit, (255, 0, 255))
+                self.obj = Wallpaper(width, height, cost_per_unit, (255, 0, 255))
             case "Ламинат":
-                obj = Laminate(width, height, cost_per_unit)
+                self.obj = Laminate(width, height, cost_per_unit)
             case "Плитка":
-                obj = Bar(width, height, cost_per_unit)
-        obj.calculate_cost(square)
-        self.result_label.setText(str(obj))
+                self.obj = Bar(width, height, cost_per_unit)
+        self.obj.calculate_cost(square)
+        self.result_label.setText(str(self.obj))
 
     def to_docx(self) -> None:
         if self.result_label.text() == "":
@@ -160,11 +160,15 @@ class MainWindow(QMainWindow):
     def to_xls(self) -> None:
         if self.result_label.text() == "":
             return
-
         wb = Workbook()
         ws = wb.active
         ws['A1'] = 'Количество и стоимость'
-        ws['A2'] = self.result_label.text()
+        ws['A2'] = 'Материал'
+        ws['B2'] = 'Цена'
+        ws['C2'] = 'Количество'
+        ws['A3'] = self.obj.get_name()
+        ws['B3'] = str(self.obj.get_cost)
+        ws['C3'] = str(self.obj.get_count)
         wb.save("excel.xlsx")
 
 
